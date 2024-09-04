@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factoring Calculator</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .section {
+            width: 90%;
+            max-width: 800px;
+            margin: 20px 0;
+        }
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            width: 100%;
+        }
+        .title {
+            text-align: center;
+            color: #333;
+        }
+        .steps, .stats, .calculator {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .step, .stat, .slider-container, .result-container {
+            flex: 1;
+            margin: 10px;
+        }
+        .step-icon, .stat-icon {
+            font-size: 30px;
+            color: #007bff;
+        }
+        .step-text, .stat-text {
+            margin-top: 5px;
+            text-align: center;
+        }
+        .slider-container h3, .result-container h3 {
+            margin-bottom: 10px;
+        }
+        .slider-container input[type=range] {
+            width: 100%;
+        }
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+        }
+        .result-container {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .result-container p {
+            margin: 5px 0;
+        }
+        .highlight {
+            color: green;
+            font-weight: bold;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            margin-top: 20px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="section">
+    <div class="card">
+        <h2 class="title">Nuestro proceso de factoraje es fácil y rápido:</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-icon">👤</div>
+                <div class="step-text">
+                    <h3>1. Crea tu cuenta</h3>
+                    <p>Te pediremos datos mínimos para que puedas completar el proceso a tu tiempo.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-icon">🔑</div>
+                <div class="step-text">
+                    <h3>2. Autorízanos en el SAT</h3>
+                    <p>Autorízanos a consultar tus facturas en el SAT con tu clave CIEC.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-icon">📄</div>
+                <div class="step-text">
+                    <h3>3. Compártenos información de tu empresa</h3>
+                    <p>Te pediremos esta información una sola vez.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="card">
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-icon">😊</div>
+                <div class="stat-text">
+                    <h3>138</h3>
+                    <p>Clientes</p>
+                </div>
+            </div>
+            <div class="stat">
+                <div class="stat-icon">📄</div>
+                <div class="stat-text">
+                    <h3>23,392</h3>
+                    <p>CFDIs</p>
+                </div>
+            </div>
+            <div class="stat">
+                <div class="stat-icon">🛠</div>
+                <div class="stat-text">
+                    <h3>8</h3>
+                    <p>Soporte Dedicado</p>
+                </div>
+            </div>
+            <div class="stat">
+                <div class="stat-icon">👥</div>
+                <div class="stat-text">
+                    <h3>32</h3>
+                    <p>Trabajando para ti</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="card">
+        <div class="calculator">
+            <div class="slider-container">
+                <h3>Monto total de tus facturas</h3>
+                <input type="range" id="amountRange" min="25000" max="1000000" value="180000" oninput="updateAmountValue(this.value)">
+                <div class="slider-labels">
+                    <span>$25,000 MXN</span>
+                    <span>$1,000,000 MXN</span>
+                </div>
+                <p id="amountValue" style="text-align:center; background-color:#f0f0f0; padding:10px; border-radius:5px;">$180,000</p>
+
+                <h3>¿En cuántos días pagan tu factura?</h3>
+                <input type="range" id="daysRange" min="15" max="180" value="60" oninput="updateDaysValue(this.value)">
+                <div class="slider-labels">
+                    <span>15 Días</span>
+                    <span>180 Días</span>
+                </div>
+                <p id="daysValue" style="text-align:center; background-color:#f0f0f0; padding:10px; border-radius:5px;">60 Días</p>
+            </div>
+
+            <div class="result-container">
+                <h3>Simulación del financiamiento</h3>
+                <p>Monto total de tus Facturas: <span id="totalAmount">$180,000</span></p>
+                <p>Reserva del Aforo (depende del historial): <span id="unfinancedAmount">$3,600</span></p>
+                <p>Monto financiado: <span id="financedAmount">$176,400</span></p>
+                <p>Costo financiero: <span id="totalCost">$5,556.6</span></p>
+                <p class="highlight">Recibes en tu cuenta hoy: <span id="finalAmount">$170,843.4</span></p>
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <div class="button" onclick="calculate()">Registrarme</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function updateAmountValue(value) {
+        document.getElementById('amountValue').innerText = `$${parseInt(value).toLocaleString()}`;
+        calculate();
+    }
+
+    function updateDaysValue(value) {
+        document.getElementById('daysValue').innerText = `${value} Días`;
+        calculate();
+    }
+
+    function calculate() {
+        const amount = parseInt(document.getElementById('amountRange').value);
+        const days = parseInt(document.getElementById('daysRange').value);
+
+        const unfinancedAmount = amount * 0.02;
+        const financedAmount = amount - unfinancedAmount;
+        const totalCost = financedAmount * 0.0315;
+        const finalAmount = financedAmount - totalCost;
+
+        document.getElementById('totalAmount').innerText = `$${amount.toLocaleString()}`;
+        document.getElementById('unfinancedAmount').innerText = `$${unfinancedAmount.toLocaleString()}`;
+        document.getElementById('financedAmount').innerText = `$${financedAmount.toLocaleString()}`;
+        document.getElementById('totalCost').innerText = `$${totalCost.toLocaleString()}`;
+        document.getElementById('finalAmount').innerText = `$${finalAmount.toLocaleString()}`;
+    }
+
+    // Initialize values
+    calculate();
+</script>
+
+</body>
+</html>
